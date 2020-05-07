@@ -33,17 +33,17 @@ export class AppComponent implements OnInit  {
 
   searchEvent(): void {
     const params = {
-      book_title: this.searchTerm.nativeElement.value
+      file_name: this.searchTerm.nativeElement.value
     };
-    this.knoraService.gravsearchQuery('book_query', params).subscribe((searchres: Array<ReadResource>) => {
+    this.knoraService.gravsearchQuery('physical_copy_query', params).subscribe((searchres: Array<ReadResource>) => {
       console.log('RESDATA:: ', searchres);
       this.searchres = searchres;
     });
   }
 
   ngOnInit() {
-    this.getResource('http://rdfh.ch/0803/0015627fe303');
+    this.getResource('http://rdfh.ch/0827/-4TPtUytS3SW1hjUNSQu3Q');
+    this.searchEvent();
   }
-
 }
 

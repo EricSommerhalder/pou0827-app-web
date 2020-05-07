@@ -9,20 +9,18 @@ export class GravsearchTemplatesService {
 
   constructor(private sparqlPrep: SparqlPrep) { }
 
-  book_query(params: {[index: string]: string}): string {
+  physical_copy_query(params: {[index: string]: string}): string {
     const result = this.sparqlPrep.compile(`
     PREFIX knora-api: <http://api.knora.org/ontology/knora-api/simple/v2#>
-    PREFIX incunabula: <{{ ontology }}/ontology/0803/incunabula/simple/v2#>
+    PREFIX pou: <{{ ontology }}/ontology/0827/pou/simple/v2#>
     CONSTRUCT {
-      ?book knora-api:isMainResource true .
-      ?book incunabula:title ?title .
-      ?book incunabula:pubdate ?pubdate .
+      ?physicalCopy knora-api:isMainResource true .
+      ?physicalCopy pou:fileName ?fileName .
     } WHERE {
-      ?book a knora-api:Resource .
-      ?book a incunabula:book .
-      ?book incunabula:title ?title .
-      FILTER regex(?title, "{{ book_title }}", "i") .
-      OPTIONAL { ?book incunabula:pubdate ?pubdate . }
+      ?physicalCopy a knora-api:Resource .
+      ?physicalCopy a pou:PhysicalCopy .
+      ?physicalCopy pou:fileName ?fileName .
+      FILTER regex(?fileName, "{{ file_name }}", "i") .
     }
     `, params);
     return result;
